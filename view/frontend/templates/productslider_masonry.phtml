@@ -1,0 +1,60 @@
+<?php
+/**
+ * Copyright @ LiveWise. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php
+/**
+ * @var $block \Magento\Reports\Block\Product\Viewed
+ */
+?>
+<?php
+if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())) {
+    $productsliderId = $block->getUniqueSliderKey();
+
+    $type = 'widget-viewed';
+    $mode = 'grid';
+    $type = $type . '-' . $mode;
+
+    $image_id = 'product_page_image_medium';
+    $items = $block->getProductCollection();
+}
+?>
+
+<?php if ($exist):?>
+<link rel="stylesheet" type="text/css" 
+      href="<?php echo $block->getViewFileUrl('Mageplaza_Productslider::css/masory.css')?>">
+<div class="mp-product-slider-masory masonry" id="<?= $productsliderId ?>">
+    <?php foreach ($items as $_item): ?>
+        <div class="item">
+            <a href="<?php /* @escapeNotVerified */ echo $block->getProductUrl($_item) ?>" class="product-item-photo">
+                <!--<?php echo $block->getImage($_item, $image_id)->toHtml(); ?>-->
+                <img src="<?php echo $block->getUrl().'pub/media/catalog/product'.$_item->getImage(); ?>" />
+            </a>
+            <div class="overlay">
+                <?php /* @escapeNotVerified */ echo $block->getProductPriceHtml(
+                    $_item,
+                    \Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE,
+                    \Magento\Framework\Pricing\Render::ZONE_ITEM_LIST,
+                    [
+                        'price_id_suffix' => '-' . $type
+                    ]
+                ) ?>
+            </div>
+        </div>
+    <?php endforeach ?>
+</div>
+<script>
+/*
+require([
+    'jquery',
+    'Mageplaza_Productslider/js/owl.carousel.min'
+], function ($) {
+    $('#mageplaza-product-slider-<?php echo $productsliderId;?>').owlCarousel(<?php echo ($block->getAllOptions())?>);
+});
+*/
+</script>
+<?php endif;?>

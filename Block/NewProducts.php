@@ -10,9 +10,9 @@ class NewProducts extends \Mageplaza\Productslider\Block\AbstractSlider
 {
     public function getProductCollection()
     {
-        $objectManager   = \Magento\Framework\App\ObjectManager::getInstance();
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $visibleProducts = $objectManager->create('\Magento\Catalog\Model\Product\Visibility')->getVisibleInCatalogIds();
-        $collection      = $objectManager->create('\Magento\Catalog\Model\ResourceModel\Product\Collection')->setVisibility($visibleProducts);
+        $collection = $objectManager->create('\Magento\Catalog\Model\ResourceModel\Product\Collection')->setVisibility($visibleProducts);
         $collection = $this->_addProductAttributesAndPrices($collection)
             ->addAttributeToFilter(
                 'news_from_date',
@@ -35,7 +35,6 @@ class NewProducts extends \Mageplaza\Productslider\Block\AbstractSlider
 
         return $collection;
     }
-
 
     public function getProductCacheKey()
     {
